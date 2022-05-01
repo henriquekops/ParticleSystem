@@ -2,33 +2,29 @@
 #-*- coding: utf-8 -*-
 
 # built-in dependencies
-import os
+import sys
+
+# project dependencies
+from src.utils import fix_environment
+from src.window import Window
 
 # external dependencies
-from OpenGL.GL import *
-from OpenGL.GLUT import *
-from OpenGL.GLU import *
+from OpenGL.GLUT import (
+	glutInit,
+	glutMainLoop
+)
 
-WINDOW_XSIZE = 400
-WINDOW_YSIZE = 600
-WINDOW_XPOSITION = 0
-WINDOW_YPOSITION = 0
 
 if __name__ == "__main__":
-
-	try:
-		del os.environ["DISPLAY"]
-	except Exception:
-		pass
-
+	fix_environment()
 	glutInit(sys.argv)
-	glutInitDisplayMode(GLUT_RGBA)
-	glutInitWindowPosition(WINDOW_XPOSITION, WINDOW_YPOSITION)
-	glutInitWindowSize(WINDOW_XSIZE, WINDOW_YSIZE)
-	glutCreateWindow("ParticleSystem")
-
-	try:
-		glutMainLoop
-	except Exception as error:
-		print(f"ERROR: {error}")
-		sys.exit(1)
+	window = Window(
+		"ParticleSystem",
+		400,
+		600,
+		0,
+		0
+	)
+	window.create()
+	window.display()
+	glutMainLoop()
