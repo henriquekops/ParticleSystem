@@ -11,7 +11,7 @@ class Vector2:
 		self.x = x
 		self.y = y
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"(x={self.x}, y={self.y})"
 
 
@@ -22,7 +22,7 @@ class Vector3:
 		self.y = y
 		self.z = z
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"(x={self.x}, y={self.y}, z={self.z})"
 
 def fix_environment() -> None:

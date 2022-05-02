@@ -36,7 +36,7 @@ class Particle(Object):
 		self.radius = radius
 		self.ttl = ttl
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"(position={self.position}, " + \
 			f"velocity={self.velocity}, " + \
 			f"acceleration={self.acceleration}, " + \
