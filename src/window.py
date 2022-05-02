@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+# project dependencies
+from src.object import Object
+
 # built-in dependencies
 import time
 
@@ -41,7 +44,6 @@ class Window:
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
-		glutSwapBuffers()
 	
 	def __idle_view(self) -> None:
 		now = time.time()
@@ -58,6 +60,9 @@ class Window:
 		glutInitWindowSize(self.width, self.heigth)
 		glutCreateWindow(self.title)
 
-	def display(self) -> None:
+	def display(self, *objects:Object) -> None:
 		glutDisplayFunc(self.__reset_view)
 		glutIdleFunc(self.__idle_view)
+		for object in objects:
+			object.draw()
+		glutSwapBuffers()

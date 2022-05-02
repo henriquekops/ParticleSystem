@@ -5,8 +5,13 @@
 import sys
 
 # project dependencies
-from src.utils import fix_environment
+from src.utils import (
+	Vector2, 
+	Vector3, 
+	fix_environment
+)
 from src.window import Window
+from src.particle import Particle
 
 # external dependencies
 from OpenGL.GLUT import (
@@ -18,13 +23,23 @@ from OpenGL.GLUT import (
 if __name__ == "__main__":
 	fix_environment()
 	glutInit(sys.argv)
+
 	window = Window(
-		"ParticleSystem",
-		400,
-		600,
-		0,
-		0
+		title="ParticleSystem",
+		height=400,
+		width=400,
+		x=0,
+		y=0
 	)
+
 	window.create()
-	window.display()
+
+	p = Particle(
+		color=Vector3(1,1,1)
+	)
+
+	print(p)
+
+	window.display(p)
+
 	glutMainLoop()
