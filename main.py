@@ -12,11 +12,13 @@ from src.utils import (
 )
 from src.window import Window
 from src.particle import Particle
+from src.ui import keyboard
 
 # external dependencies
 from OpenGL.GLUT import (
 	glutInit,
-	glutMainLoop
+	glutMainLoop,
+	glutKeyboardFunc
 )
 
 
@@ -42,4 +44,5 @@ if __name__ == "__main__":
 
 	window.display(p)
 
+	glutKeyboardFunc(keyboard)
 	glutMainLoop()
