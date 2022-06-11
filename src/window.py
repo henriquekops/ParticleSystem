@@ -2,7 +2,10 @@
 #-*- coding: utf-8 -*-
 
 # project dependencies
-from src.object import Object
+from src.box import Box
+from src.detector import CollisionDetector
+from src.particle import Particle
+# from src.object import Object
 
 # built-in dependencies
 import time
@@ -25,7 +28,9 @@ from OpenGL.GLUT import (
 	glutDisplayFunc,
 	glutIdleFunc,
 	glutSwapBuffers,
-	glutPostRedisplay
+	glutPostRedisplay,
+	glutReshapeFunc,
+	glutMainLoop
 )
 
 
@@ -39,20 +44,12 @@ class Window:
 		self.y = y
 		self.init_time = time.time()
 		self.acc_dt = 0
+		self.dt = 0
 	
 	def __reset_view(self) -> None:
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+		glClear(GL_COLOR_BUFFER_BIT)
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
-	
-	def __idle_view(self) -> None:
-		now = time.time()
-		dt = now - self.init_time
-		self.init_time = now
-		self.acc_dt += dt
-		if self.acc_dt > 1.0 / 30:
-			self.acc_dt = 0
-			glutPostRedisplay()
 
 	def create(self) -> None:
 		glutInitDisplayMode(GLUT_RGBA)
@@ -60,9 +57,36 @@ class Window:
 		glutInitWindowSize(self.width, self.heigth)
 		glutCreateWindow(self.title)
 
-	def display(self, *objects:Object) -> None:
-		glutDisplayFunc(self.__reset_view)
+	# def display(self, *objects:Object) -> None:
+	# 	glutDisplayFunc(self.__reset_view)
+	# 	glutIdleFunc(self.__idle_view)
+	# 	for object in objects:
+	# 		object.draw()
+	# 	glutSwapBuffers()
+
+	def display(self, b:Box, p:Particle, cd: CollisionDetector):
+		self.b = b
+		self.p = p
+		self.cd = cd
+		glutDisplayFunc(self.__display)
 		glutIdleFunc(self.__idle_view)
-		for object in objects:
-			object.draw()
+		# glutReshapeFunc()
+		glutMainLoop()
+
+	def __idle_view(self):
+		now = time.time()
+		dt = now - self.init_time
+		self.init_time = now
+		self.acc_dt += dt
+		if self.acc_dt > 1.0 / 30:
+			self.dt = self.acc_dt
+			self.acc_dt = 0
+			glutPostRedisplay()
+
+	def __display(self) -> None:
+		self.__reset_view()
+		self.p.draw()
+		self.b.draw()
+		self.cd.handleParticleBoxCollision(self.b, self.p)
+		self.p.move(self.dt)
 		glutSwapBuffers()

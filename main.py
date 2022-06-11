@@ -10,14 +10,13 @@ from src.utils import (
 	Vector3, 
 	fix_environment
 )
+from src.detector import CollisionDetector
 from src.window import Window
 from src.particle import Particle
+from src.box import Box
 
 # external dependencies
-from OpenGL.GLUT import (
-	glutInit,
-	glutMainLoop
-)
+from OpenGL.GLUT import glutInit
 
 
 if __name__ == "__main__":
@@ -34,12 +33,21 @@ if __name__ == "__main__":
 
 	window.create()
 
+	cd = CollisionDetector()
+
 	p = Particle(
+		velocity=Vector2(0.5, 0.7),
+		acceleration=Vector2(0.1, 2.0),
+		color=Vector3(1,1,1),
+		radius=0.05
+	)
+
+	b = Box(
+		height=19,
+		width=19,
 		color=Vector3(1,1,1)
 	)
 
-	print(p)
+	# cd.handleParticleBoxCollision(b, p)
 
-	window.display(p)
-
-	glutMainLoop()
+	window.display(b, p, cd)
