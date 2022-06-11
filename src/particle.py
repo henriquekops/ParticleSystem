@@ -41,7 +41,7 @@ class Particle(Object):
 		self.bottom = Vector2(self.position.x, self.position.y+self.radius)
 		self.top = Vector2(self.position.x, self.position.y-self.radius)
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"(position={self.position}, " + \
 			f"velocity={self.velocity}, " + \
 			f"acceleration={self.acceleration}, " + \
