@@ -36,8 +36,8 @@ if __name__ == "__main__":
 	cd = CollisionDetector()
 
 	p = Particle(
-		velocity=Vector2(0.5, 0.7),
-		acceleration=Vector2(0.1, 2.0),
+		velocity=Vector2(2.0, -1.58),
+		acceleration=Vector2(0.0, -5.0),
 		color=Vector3(1,1,1),
 		radius=0.05
 	)
@@ -48,6 +48,6 @@ if __name__ == "__main__":
 		color=Vector3(1,1,1)
 	)
 
-	# cd.handleParticleBoxCollision(b, p)
+	cd.handleParticleBoxCollision(b, p)
 
 	window.display(b, p, cd)

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+# built-in dependencies
+from copy import deepcopy
+
 # project dependencies
 from src.object import Object
 from src.utils import (
@@ -12,7 +15,8 @@ from src.utils import (
 from numpy import (
 	pi,
 	sin,
-	cos
+	cos,
+	array
 )
 from OpenGL.GL import (
 	GL_LINE_LOOP,
@@ -30,16 +34,14 @@ class Particle(Object):
 	def __init__(self, position:Vector2 = Vector2(0,0), velocity:Vector2 = Vector2(0,0), 
 		acceleration:Vector2 = Vector2(0,0), color:Vector3 = Vector3(0,0,0), 
 		radius:float = 0.5, ttl:float = 0.5) -> None:
-		self.position:Vector2 = position
-		self.velocity:Vector2 = velocity
-		self.acceleration:Vector2 = acceleration
-		self.color:Vector3 = color
-		self.radius:float = radius
-		self.ttl:float = ttl
-		self.left = Vector2(self.position.x-self.radius, self.position.y)
-		self.right = Vector2(self.position.x+self.radius, self.position.y)
-		self.bottom = Vector2(self.position.x, self.position.y+self.radius)
-		self.top = Vector2(self.position.x, self.position.y-self.radius)
+		self.position = position
+		self.velocity = velocity
+		self.acceleration = acceleration
+		self.color = color
+		self.radius = radius
+		self.ttl = ttl
+		self.borders()
+
 
 	def __str__(self) -> str:
 		return f"(position={self.position}, " + \
@@ -50,8 +52,16 @@ class Particle(Object):
 			f"self.ttl={self.ttl})"
 
 	def move(self, dt:float):
+		aux: Vector2 = deepcopy(self.velocity)
 		self.velocity.sum(self.acceleration.mult(dt))
-		self.position.sum(self.velocity.mult(dt))
+		self.position.sum(aux.mult(dt))
+		self.borders()
+
+	def borders(self):
+		self.left = Vector2(self.position.x-self.radius, self.position.y)
+		self.right = Vector2(self.position.x+self.radius, self.position.y)
+		self.bottom = Vector2(self.position.x, self.position.y+self.radius)
+		self.top = Vector2(self.position.x, self.position.y-self.radius)
 
 	def draw(self) -> None:
 		glColor3f(self.color.x, self.color.y, self.color.z)

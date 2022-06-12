@@ -5,6 +5,9 @@
 from __future__ import annotations
 import os
 
+# external dependencies
+from numpy import array
+
 
 class Vector2:
 
@@ -16,9 +19,8 @@ class Vector2:
 		return f"(x={self.x}, y={self.y})"
 
 	def mult(self, factor:float):
-		if factor > 0:
-			self.x *= factor
-			self.y *= factor
+		self.x *= factor
+		self.y *= factor
 		return self
 
 	def sum(self, vector2:Vector2):
