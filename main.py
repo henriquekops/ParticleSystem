@@ -10,18 +10,22 @@ from src.utils import (
 	Vector3, 
 	fix_environment
 )
-from src.detector import CollisionDetector
+from src.ui import keyboard
 from src.window import Window
 from src.particle import Particle
 from src.box import Box
 
 # external dependencies
-from OpenGL.GLUT import glutInit
+from OpenGL.GLUT import (
+	glutInit,
+	glutKeyboardFunc
+)
 
 
 if __name__ == "__main__":
 	fix_environment()
 	glutInit(sys.argv)
+	glutKeyboardFunc(keyboard)
 
 	window = Window(
 		title="ParticleSystem",
@@ -33,10 +37,16 @@ if __name__ == "__main__":
 
 	window.create()
 
-	cd = CollisionDetector()
+	p1 = Particle(
+		velocity=Vector2(2.0, -2.0),
+		acceleration=Vector2(0.0, -5.0),
+		color=Vector3(1,1,1),
+		radius=0.05
+	)
 
-	p = Particle(
-		velocity=Vector2(2.0, -1.58),
+	p2 = Particle(
+		position=Vector2(0.2, 0.2),
+		velocity=Vector2(2.0, -2.75),
 		acceleration=Vector2(0.0, -5.0),
 		color=Vector3(1,1,1),
 		radius=0.05
@@ -48,6 +58,4 @@ if __name__ == "__main__":
 		color=Vector3(1,1,1)
 	)
 
-	cd.handleParticleBoxCollision(b, p)
-
-	window.display(b, p, cd)
+	window.display(b, p1, p2)

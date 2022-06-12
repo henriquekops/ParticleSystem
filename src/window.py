@@ -58,17 +58,9 @@ class Window:
 		glutInitWindowSize(self.width, self.heigth)
 		glutCreateWindow(self.title)
 
-	# def display(self, *objects:Object) -> None:
-	# 	glutDisplayFunc(self.__reset_view)
-	# 	glutIdleFunc(self.__idle_view)
-	# 	for object in objects:
-	# 		object.draw()
-	# 	glutSwapBuffers()
-
-	def display(self, b:Box, p:Particle, cd: CollisionDetector):
+	def display(self, b:Box, *p:Particle):
 		self.b = b
 		self.p = p
-		self.cd = cd
 		glutDisplayFunc(self.__display)
 		glutIdleFunc(self.__idle_view)
 		# glutReshapeFunc(self.__reshape)
@@ -95,8 +87,9 @@ class Window:
 
 	def __display(self) -> None:
 		self.__reset_view()
-		self.p.draw()
 		self.b.draw()
-		self.p.move(self.dt)
-		self.cd.handleParticleBoxCollision(self.b, self.p)
+		for p in self.p:
+			p.draw()
+			p.move(self.dt)
+			CollisionDetector.handleParticleBoxCollision(self.b, p)
 		glutSwapBuffers()

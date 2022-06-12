@@ -8,8 +8,9 @@ from src.particle import Particle
 
 class CollisionDetector():
 
-	def handleParticleBoxCollision(self, b: Box, p:Particle) -> None:
+	@staticmethod
+	def handleParticleBoxCollision(b: Box, p:Particle) -> None:
 		if p.bottom.y >= b.bottom or p.top.y <= b.top:
 			p.velocity.y *= -1
-		elif p.left.x <= b.left or p.right.x >= b.right:
+		if p.left.x <= b.left or p.right.x >= b.right:
 			p.velocity.x *= -1

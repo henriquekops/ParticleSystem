@@ -19,6 +19,7 @@ from numpy import (
 	array
 )
 from OpenGL.GL import (
+	GL_LINES,
 	GL_LINE_LOOP,
 	glBegin,
 	glEnd,
@@ -40,7 +41,7 @@ class Particle(Object):
 		self.color = color
 		self.radius = radius
 		self.ttl = ttl
-		self.borders()
+		self.__update_borders()
 
 
 	def __str__(self) -> str:
@@ -55,9 +56,11 @@ class Particle(Object):
 		aux: Vector2 = deepcopy(self.velocity)
 		self.velocity.sum(self.acceleration.mult(dt))
 		self.position.sum(aux.mult(dt))
-		self.borders()
+		self.__update_borders()
+		# self.__draw_acceleration()
+		self.__draw_velocity()
 
-	def borders(self):
+	def __update_borders(self):
 		self.left = Vector2(self.position.x-self.radius, self.position.y)
 		self.right = Vector2(self.position.x+self.radius, self.position.y)
 		self.bottom = Vector2(self.position.x, self.position.y+self.radius)
@@ -73,4 +76,17 @@ class Particle(Object):
 				self.position.y + (sin(angle) * self.radius)
 			)
 		glEnd()
-		glColor3f(1,0,0)
+
+	def __draw_acceleration(self):
+		glColor3f(self.color.x, self.color.y, self.color.z)
+		glBegin(GL_LINES)
+		glVertex2f(self.position.x, self.position.y)
+		glVertex2f(self.acceleration.x, self.acceleration.y)
+		glEnd()
+
+	def __draw_velocity(self):
+		glColor3f(self.color.x, self.color.y, self.color.z)
+		glBegin(GL_LINES)
+		glVertex2f(self.position.x, self.position.y)
+		glVertex2f(self.velocity.x, self.velocity.y)
+		glEnd()
