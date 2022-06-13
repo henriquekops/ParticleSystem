@@ -22,6 +22,7 @@ class CollisionDetector():
 	def handleParticleParticleCollision(p1: Particle, p2:Particle) -> None:
 		
 		def compute_velocity(p1: Particle, p2: Particle):
+			# elastic collision: https://en.wikipedia.org/wiki/Elastic_collision
 			v1 = np.array([p1.velocity.x, p1.velocity.y])
 			v2 = np.array([p2.velocity.x, p2.velocity.y])
 			x1 = np.array([p1.position.x, p1.position.y])

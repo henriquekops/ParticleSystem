@@ -37,6 +37,8 @@ from OpenGL.GLUT import (
 
 class Window:
 
+	__FPS = 100
+
 	def __init__(self, title:str, height:int = 0, width:int = 0, x:int = 0, y:int = 0):
 		self.title = title
 		self.heigth = height
@@ -71,7 +73,7 @@ class Window:
 		self.dt = (latest - self.early) / 1000.0
 		self.early = latest
 		self.acc_dt += self.dt
-		if self.acc_dt > 1.0 / 80:
+		if self.acc_dt > 1.0 / self.__FPS:
 			self.acc_dt = 0.0
 			glutPostRedisplay()
 
