@@ -41,15 +41,15 @@ if __name__ == "__main__":
 		velocity=Vector2(2.0, -2.0),
 		acceleration=Vector2(0.0, -5.0),
 		color=Vector3(1,1,1),
-		radius=0.05
+		radius=0.1
 	)
 
 	p2 = Particle(
-		position=Vector2(0.2, 0.2),
+		position=Vector2(0.3, 0.3),
 		velocity=Vector2(2.0, -2.75),
-		acceleration=Vector2(0.0, -5.0),
+		acceleration=Vector2(0.0, -3.0),
 		color=Vector3(1,1,1),
-		radius=0.05
+		radius=0.1
 	)
 
 	b = Box(

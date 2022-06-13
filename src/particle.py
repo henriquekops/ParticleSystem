@@ -31,18 +31,18 @@ from OpenGL.GL import (
 class Particle(Object):
 
 	__N_VERTICES = 30
+	__MASS_MULTIPLIER = 0.2
 
-	def __init__(self, position:Vector2 = Vector2(0,0), velocity:Vector2 = Vector2(0,0), 
-		acceleration:Vector2 = Vector2(0,0), color:Vector3 = Vector3(0,0,0), 
-		radius:float = 0.5, ttl:float = 0.5) -> None:
+	def __init__(self, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
+		acceleration:Vector2 = Vector2(), color:Vector3 = Vector3(), radius:float=0, ttl:float=0) -> None:
 		self.position = position
 		self.velocity = velocity
 		self.acceleration = acceleration
 		self.color = color
 		self.radius = radius
 		self.ttl = ttl
+		self.mass = self.radius * self.__MASS_MULTIPLIER
 		self.__update_borders()
-
 
 	def __str__(self) -> str:
 		return f"(position={self.position}, " + \

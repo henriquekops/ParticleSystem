@@ -71,7 +71,7 @@ class Window:
 		self.dt = (latest - self.early) / 1000.0
 		self.early = latest
 		self.acc_dt += self.dt
-		if self.acc_dt > 1.0 / 60:
+		if self.acc_dt > 1.0 / 80:
 			self.acc_dt = 0.0
 			glutPostRedisplay()
 
@@ -92,4 +92,7 @@ class Window:
 			p.draw()
 			p.move(self.dt)
 			CollisionDetector.handleParticleBoxCollision(self.b, p)
+		for p1 in self.p:
+			for p2 in self.p:
+				CollisionDetector.handleParticleParticleCollision(p1, p2)
 		glutSwapBuffers()
