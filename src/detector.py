@@ -8,15 +8,57 @@ from src.particle import Particle
 # external dependencies
 import numpy as np
 
+# from utils import Vector2
+
 
 class CollisionDetector():
 
 	@staticmethod
-	def handleParticleBoxCollision(b: Box, p:Particle) -> None:
-		if p.bottom.y >= b.bottom or p.top.y <= b.top:
+	def handleParticleBoxCollision(b: Box, p:Particle, dt:float) -> float:
+		# continuous collision detection
+		x0 = p.position.x
+		y0 = p.position.y
+		next_pos = p.next_position(dt)
+		x1 = next_pos.x
+		y1 = next_pos.y
+
+		tc = None
+
+		if y1 >= b.bottom:
+			tc = ((b.bottom + p.radius) - y0) / (y1 - y0) 
+		
+		# temp code
+		if p.top.y <= b.top:
 			p.velocity.y *= -1
 		if p.left.x <= b.left or p.right.x >= b.right:
 			p.velocity.x *= -1
+		
+		# new code
+
+		# if y1 <= b.top:
+		# 	tc = ((b.top + p.radius) - y0) / (y1 - y0)
+		# if x1 <= b.left:
+		# 	tc = ((b.left + p.radius) - x0) / (x1 - x0)
+		# if x1 >= b.right:
+		# 	tc = ((b.right + p.radius) - x0) / (x1 - x0)
+
+
+		# trash code
+
+		# linear interpolation
+		# xt = tc * x0 + (1-tc) * x1
+		# yt = tc * y0 + (1-tc) * y1
+		# point of collision: (xt, yt)
+		# return Vector2(xt, yt)
+
+		return tc
+
+		# old code
+
+		# if p.bottom.y >= b.bottom or p.top.y <= b.top:
+		# 	p.velocity.y *= -1
+		# if p.left.x <= b.left or p.right.x >= b.right:
+		# 	p.velocity.x *= -1
 
 	@staticmethod
 	def handleParticleParticleCollision(p1: Particle, p2:Particle) -> None:

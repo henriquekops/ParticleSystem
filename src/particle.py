@@ -3,6 +3,7 @@
 
 # built-in dependencies
 from copy import deepcopy
+from math import pi
 
 # project dependencies
 from src.object import Object
@@ -16,7 +17,8 @@ from numpy import (
 	pi,
 	sin,
 	cos,
-	array
+	# array,
+	# sqrt
 )
 from OpenGL.GL import (
 	GL_LINES,
@@ -31,7 +33,6 @@ from OpenGL.GL import (
 class Particle(Object):
 
 	__N_VERTICES = 30
-	__MASS_MULTIPLIER = 0.2
 
 	def __init__(self, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
 		acceleration:Vector2 = Vector2(), color:Vector3 = Vector3(), radius:float=0, ttl:float=0) -> None:
@@ -41,7 +42,7 @@ class Particle(Object):
 		self.color = color
 		self.radius = radius
 		self.ttl = ttl
-		self.mass = self.radius * self.__MASS_MULTIPLIER
+		self.mass = self.radius * pi ** 2
 		self.__update_borders()
 
 	def __str__(self) -> str:
@@ -52,13 +53,44 @@ class Particle(Object):
 			f"radius={self.radius}, " + \
 			f"self.ttl={self.ttl})"
 
-	def move(self, dt:float):
-		aux: Vector2 = deepcopy(self.velocity)
-		self.velocity.sum(self.acceleration.mult(dt))
-		self.position.sum(aux.mult(dt))
+	def move(self, dt:float, tc:Vector2) -> float:
+		# aux_vel2: Vector2 = deepcopy(self.velocity)
+		# aux_acc: Vector2 = deepcopy(self.acceleration)
+		# aux_acc2: Vector2 = deepcopy(self.acceleration)
+		# vel_segment = None
+		if tc:
+			# v1 = aux_vel.sum(aux_acc.mult(tc))
+			# v2 = aux_vel2.sum(aux_acc2.mult(dt))
+			
+			# vel_segment = self.__dist(v1, v2)
+			
+			self.position.sum(self.velocity.mult(tc))
+			self.velocity.sum(self.acceleration.mult(tc))
+
+			self.draw()
+
+			self.velocity.mult(dt)
+			self.velocity.y *= -1
+
+			self.position.sum(self.velocity)
+			self.velocity.sum(self.acceleration.mult(dt))
+
+		else:
+			self.position.sum(self.velocity.mult(dt))
+			self.velocity.sum(self.acceleration.mult(dt))
+
 		self.__update_borders()
 		# self.__draw_acceleration()
 		self.__draw_velocity()
+	
+	def next_position(self, dt: float):
+		pos_aux = deepcopy(self.position)
+		vel_aux = deepcopy(self.velocity)
+		return pos_aux.sum(vel_aux.mult(dt))
+
+	# def __dist(v1:Vector2, v2:Vector2) -> float:
+	# 	# euclidean dist
+	# 	return sqrt(((v2.x - v1.x)**2) + ((v2.y - v2.x)**2))
 
 	def __update_borders(self):
 		self.left = Vector2(self.position.x-self.radius, self.position.y)

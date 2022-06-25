@@ -91,9 +91,9 @@ class Window:
 		self.__reset_view()
 		self.b.draw()
 		for p in self.p:
+			tc = CollisionDetector.handleParticleBoxCollision(self.b, p, self.dt)
+			p.move(self.dt, tc)
 			p.draw()
-			p.move(self.dt)
-			CollisionDetector.handleParticleBoxCollision(self.b, p)
 		for p1 in self.p:
 			for p2 in self.p:
 				CollisionDetector.handleParticleParticleCollision(p1, p2)
