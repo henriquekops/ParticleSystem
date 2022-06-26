@@ -24,6 +24,7 @@ from OpenGL.GLUT import (
 	glutSwapBuffers,
 	glutPostRedisplay,
 	glutReshapeFunc,
+	glutKeyboardFunc,
 	glutMainLoop,
 	glutGet
 )
@@ -48,11 +49,12 @@ class Window:
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
 
-	def create(self) -> None:
+	def create(self, keyboard_func) -> None:
 		glutInitDisplayMode(GLUT_RGBA)
 		glutInitWindowPosition(self.x, self.y)
 		glutInitWindowSize(self.width, self.heigth)
 		glutCreateWindow(self.title)
+		glutKeyboardFunc(keyboard_func)
 
 	def display(self, func):
 		self.func = func

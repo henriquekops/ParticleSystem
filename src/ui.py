@@ -12,7 +12,7 @@ ESCAPE = b'\x1b'
 
 
 def keyboard(*args):
-    key = args[0]
-    if key == ESCAPE:
-        os._exit(0)
-    glutPostRedisplay()
+	key = args[0]
+	if key == ESCAPE:
+		os._exit(0)
+	glutPostRedisplay()

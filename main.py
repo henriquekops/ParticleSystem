@@ -4,7 +4,6 @@
 # built-in dependencies
 import sys
 from itertools import combinations
-from typing import List
 
 # project dependencies
 from src.utils import (
@@ -19,10 +18,7 @@ from src.box import Box
 from src.detector import CollisionDetector
 
 # external dependencies
-from OpenGL.GLUT import (
-	glutInit,
-	glutKeyboardFunc
-)
+from OpenGL.GLUT import glutInit
 
 
 def main(b:Box, *ps:Particle):
@@ -40,7 +36,6 @@ def main(b:Box, *ps:Particle):
 if __name__ == "__main__":
 	fix_environment()
 	glutInit(sys.argv)
-	glutKeyboardFunc(keyboard)
 
 	window = Window(
 		title="ParticleSystem",
@@ -50,7 +45,7 @@ if __name__ == "__main__":
 		y=0
 	)
 
-	window.create()
+	window.create(keyboard_func=keyboard)
 
 	p1 = Particle(
 		name="p1(red)",
