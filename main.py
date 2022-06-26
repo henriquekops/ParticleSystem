@@ -3,6 +3,7 @@
 
 # built-in dependencies
 import sys
+from itertools import combinations
 
 # project dependencies
 from src.utils import (
@@ -30,7 +31,7 @@ def main(b:Box, *ps:Particle):
 			p.draw()
 			p.move(dt)
 			CollisionDetector.handleParticleBoxCollision(b, p)
-		for p1, p2 in zip(ps, ps[1:]):
+		for p1, p2 in combinations(ps, 2):
 			CollisionDetector.handleParticleParticleCollision(p1, p2)
 	return __main
 
@@ -51,18 +52,29 @@ if __name__ == "__main__":
 	window.create()
 
 	p1 = Particle(
+		name="p1(red)",
 		velocity=Vector2(2.0, -2.0),
 		acceleration=Vector2(0.0, -5.0),
 		color=Vector3(1,0,0),
-		radius=0.1
+		radius=0.13
 	)
 
 	p2 = Particle(
+		name="p2(green)",
 		position=Vector2(0.3, 0.3),
 		velocity=Vector2(2.0, -2.75),
 		acceleration=Vector2(0.0, -3.0),
 		color=Vector3(0,1,0),
 		radius=0.1
+	)
+
+	p3 = Particle(
+		name="p3(blue)",
+		position=Vector2(0.1, 0.1),
+		velocity=Vector2(3.0, -3.0),
+		acceleration=Vector2(0.0, -7.0),
+		color=Vector3(0,0,1),
+		radius=0.08
 	)
 
 	b = Box(
@@ -71,4 +83,4 @@ if __name__ == "__main__":
 		color=Vector3(1,1,1)
 	)
 
-	window.display(main(b, p1, p2))
+	window.display(main(b, p1, p2, p3))

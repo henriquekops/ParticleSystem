@@ -33,8 +33,9 @@ class Particle(Object):
 	__N_VERTICES = 30
 	__MASS_MULTIPLIER = 0.2
 
-	def __init__(self, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
+	def __init__(self, name:str = "", position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
 		acceleration:Vector2 = Vector2(), color:Vector3 = Vector3(), radius:float=0, ttl:float=0) -> None:
+		self.name = name
 		self.position = position
 		self.velocity = velocity
 		self.acceleration = acceleration
