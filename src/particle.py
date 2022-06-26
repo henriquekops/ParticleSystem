@@ -58,7 +58,7 @@ class Particle(Object):
 		self.position.sum(aux.mult(dt))
 		self.__update_borders()
 		# self.__draw_acceleration()
-		self.__draw_velocity()
+		# self.__draw_velocity()
 
 	def __update_borders(self):
 		self.left = self.position.x-self.radius

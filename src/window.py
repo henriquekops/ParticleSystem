@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
-# project dependencies
-from src.box import Box
-from src.detector import CollisionDetector
-from src.particle import Particle
-from src.object import Object
-
 # external dependencies
 from OpenGL.GL import (
 	GL_PROJECTION,
@@ -60,9 +54,8 @@ class Window:
 		glutInitWindowSize(self.width, self.heigth)
 		glutCreateWindow(self.title)
 
-	def display(self, b:Box, *p:Particle):
-		self.b = b
-		self.p = p
+	def display(self, func):
+		self.func = func
 		glutDisplayFunc(self.__display)
 		glutIdleFunc(self.__idle_view)
 		# glutReshapeFunc(self.__reshape)
@@ -89,12 +82,5 @@ class Window:
 
 	def __display(self) -> None:
 		self.__reset_view()
-		self.b.draw()
-		for p in self.p:
-			p.draw()
-			p.move(self.dt)
-			CollisionDetector.handleParticleBoxCollision(self.b, p)
-		for p1 in self.p:
-			for p2 in self.p:
-				CollisionDetector.handleParticleParticleCollision(p1, p2)
+		self.func(self.dt)
 		glutSwapBuffers()
