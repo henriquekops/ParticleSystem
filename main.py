@@ -11,7 +11,7 @@ from src.utils import (
 	Vector3, 
 	fix_environment
 )
-from src.ui import keyboard
+from src import ui
 from src.window import Window
 from src.particle import Particle
 from src.box import Box
@@ -28,8 +28,9 @@ def main(b:Box, *ps:Particle):
 			p.draw()
 			p.move(dt)
 			CollisionDetector.handleParticleBoxCollision(b, p)
-		for p1, p2 in combinations(ps, 2):
-			CollisionDetector.handleParticleParticleCollision(p1, p2)
+		if ui.collision_signal:
+			for p1, p2 in combinations(ps, 2):
+				CollisionDetector.handleParticleParticleCollision(p1, p2)
 	return __main
 
 
@@ -45,7 +46,7 @@ if __name__ == "__main__":
 		y=0
 	)
 
-	window.create(keyboard_func=keyboard)
+	window.create(keyboard_func=ui.keyboard)
 
 	p1 = Particle(
 		name="p1(red)",
