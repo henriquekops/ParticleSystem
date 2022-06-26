@@ -58,8 +58,6 @@ class Particle(Object):
 		self.velocity.sum(self.acceleration.mult(dt))
 		self.position.sum(aux.mult(dt))
 		self.__update_borders()
-		# self.__draw_acceleration()
-		# self.__draw_velocity()
 
 	def __update_borders(self):
 		self.left = self.position.x-self.radius
@@ -67,7 +65,7 @@ class Particle(Object):
 		self.bottom = self.position.y+self.radius
 		self.top = self.position.y-self.radius
 
-	def draw(self) -> None:
+	def draw(self, draw_acc_vel) -> None:
 		glColor3f(self.color.x, self.color.y, self.color.z)
 		glBegin(GL_LINE_LOOP)
 		for vertex in range(self.__N_VERTICES):
@@ -77,6 +75,9 @@ class Particle(Object):
 				self.position.y + (sin(angle) * self.radius)
 			)
 		glEnd()
+		if draw_acc_vel:
+			self.__draw_acceleration()
+			self.__draw_velocity()
 
 	def __draw_acceleration(self):
 		glColor3f(self.color.x, self.color.y, self.color.z)

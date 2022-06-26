@@ -25,7 +25,7 @@ def main(b:Box, *ps:Particle):
 	def __main(dt:float):
 		b.draw()
 		for p in ps:
-			p.draw()
+			p.draw(ui.show_acc_vec)
 			p.move(dt)
 			CollisionDetector.handleParticleBoxCollision(b, p)
 		if ui.collision_signal:
