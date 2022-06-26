@@ -61,10 +61,10 @@ class Particle(Object):
 		self.__draw_velocity()
 
 	def __update_borders(self):
-		self.left = Vector2(self.position.x-self.radius, self.position.y)
-		self.right = Vector2(self.position.x+self.radius, self.position.y)
-		self.bottom = Vector2(self.position.x, self.position.y+self.radius)
-		self.top = Vector2(self.position.x, self.position.y-self.radius)
+		self.left = self.position.x-self.radius
+		self.right = self.position.x+self.radius
+		self.bottom = self.position.y+self.radius
+		self.top = self.position.y-self.radius
 
 	def draw(self) -> None:
 		glColor3f(self.color.x, self.color.y, self.color.z)

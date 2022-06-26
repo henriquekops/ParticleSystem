@@ -13,10 +13,19 @@ class CollisionDetector():
 
 	@staticmethod
 	def handleParticleBoxCollision(b: Box, p:Particle) -> None:
-		if p.bottom.y >= b.bottom or p.top.y <= b.top:
+		# discrete collision detection
+		if p.bottom >= b.bottom:
 			p.velocity.y *= -1
-		if p.left.x <= b.left or p.right.x >= b.right:
+			p.position.y = b.bottom - p.radius
+		if p.top <= b.top:
+			p.velocity.y *= -1
+			p.position.y = b.top + p.radius
+		if p.left <= b.left:
 			p.velocity.x *= -1
+			p.position.x = b.left + p.radius
+		if p.right >= b.right:
+			p.velocity.x *= -1
+			p.position.x = b.right - p.radius
 
 	@staticmethod
 	def handleParticleParticleCollision(p1: Particle, p2:Particle) -> None:
