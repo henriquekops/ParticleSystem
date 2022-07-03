@@ -15,8 +15,7 @@ from src.utils import (
 from numpy import (
 	pi,
 	sin,
-	cos,
-	array
+	cos
 )
 from OpenGL.GL import (
 	GL_LINES,
@@ -33,9 +32,9 @@ class Particle(Object):
 	__N_VERTICES = 30
 	__MASS_MULTIPLIER = 0.2
 
-	def __init__(self, name:str = "", position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
+	def __init__(self, id:int = 0, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
 		acceleration:Vector2 = Vector2(), color:Vector3 = Vector3(), radius:float=0, ttl:float=0) -> None:
-		self.name = name
+		self.id = id
 		self.position = position
 		self.velocity = velocity
 		self.acceleration = acceleration
@@ -46,7 +45,8 @@ class Particle(Object):
 		self.__update_borders()
 
 	def __str__(self) -> str:
-		return f"(position={self.position}, " + \
+		return f"(id={self.id}, "+ \
+			f"position={self.position}, " + \
 			f"velocity={self.velocity}, " + \
 			f"acceleration={self.acceleration}, " + \
 			f"color={self.color}, " + \
@@ -55,8 +55,8 @@ class Particle(Object):
 
 	def move(self, dt:float):
 		aux: Vector2 = deepcopy(self.velocity)
-		self.velocity.sum(self.acceleration.mult(dt))
-		self.position.sum(aux.mult(dt))
+		self.position.sum(aux.mult(dt)) # sf = si + v * dt (displacement)
+		self.velocity.sum(self.acceleration.mult(dt)) # vf = vi + a * dt (UVRM velocity variation)
 		self.__update_borders()
 
 	def __update_borders(self):
@@ -65,7 +65,7 @@ class Particle(Object):
 		self.bottom = self.position.y+self.radius
 		self.top = self.position.y-self.radius
 
-	def draw(self, draw_acc_vel) -> None:
+	def draw(self, draw_acc_vel_signal:bool) -> None:
 		glColor3f(self.color.x, self.color.y, self.color.z)
 		glBegin(GL_LINE_LOOP)
 		for vertex in range(self.__N_VERTICES):
@@ -75,7 +75,7 @@ class Particle(Object):
 				self.position.y + (sin(angle) * self.radius)
 			)
 		glEnd()
-		if draw_acc_vel:
+		if draw_acc_vel_signal:
 			self.__draw_acceleration()
 			self.__draw_velocity()
 
