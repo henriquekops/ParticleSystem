@@ -18,15 +18,15 @@ class Vector2:
 	def __str__(self) -> str:
 		return f"(x={self.x}, y={self.y})"
 
-	def mult(self, factor:float):
-		self.x *= factor
-		self.y *= factor
-		return self
+	def __add__(self, other:Vector2):
+		x = self.x + other.x
+		y = self.y + other.y
+		return Vector2(x, y) 
 
-	def sum(self, vector2:Vector2):
-		self.x += vector2.x
-		self.y += vector2.y
-		return self
+	def __mul__(self, factor:float):
+		x = self.x * factor
+		y = self.y * factor
+		return Vector2(x, y)
 
 
 class Vector3:

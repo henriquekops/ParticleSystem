@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
-# built-in dependencies
-from copy import deepcopy
-
 # project dependencies
 from src.object import Object
 from src.utils import (
@@ -54,9 +51,8 @@ class Particle(Object):
 			f"self.ttl={self.ttl})"
 
 	def move(self, dt:float):
-		aux: Vector2 = deepcopy(self.velocity)
-		self.position.sum(aux.mult(dt)) # sf = si + v * dt (displacement)
-		self.velocity.sum(self.acceleration.mult(dt)) # vf = vi + a * dt (UVRM velocity variation)
+		self.position += (self.velocity * dt) # sf = si + v * dt (displacement)
+		self.velocity += (self.acceleration * dt) # vf = vi + a * dt (UVRM velocity variation with constant acceleration)
 		self.__update_borders()
 
 	def __update_borders(self):

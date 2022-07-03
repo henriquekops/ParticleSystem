@@ -61,6 +61,6 @@ if __name__ == "__main__":
 
 	spawn_point = SpawnPoint()
 
-	particles = spawn_point.spawn_many(20, b)
+	particles = spawn_point.spawn_many(5, b)
 
 	window.display(main(b, particles))
