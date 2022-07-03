@@ -3,66 +3,95 @@
 
 # built-in dependencies
 from random import uniform
+from turtle import position
 from typing import List
 
 # project dependencies
 from .particle import Particle
 from .box import Box
+from .object import Object
 from .utils import (
 	Vector2, 
 	Color
 )
 
-class SpawnPoint:
+# external dependencies
+from OpenGL.GL import (
+	GL_LINE_LOOP,
+	glBegin,
+	glEnd,
+	glVertex2f,
+	glColor3f
+)
 
-	__BORDER_THRESHOLD = 0.01
 
-	def __init__(self, x:float=0, y:float=0, width:int=0, height:int=0) -> None:
-		pass
+class SpawnPoint(Object):
 
-	def __set_axis(self, r:float, min:float, max:float):
-		k = uniform(min, max)
-		if k < 0: 
-			k += (r+self.__BORDER_THRESHOLD)
-		else: 
-			k -= (r+self.__BORDER_THRESHOLD)
-		return k
+	__BORDER_THRESHOLD = 0.15
+	__MIN_RADIUS = 0.05
+	__MAX_RADIUS = 0.15
+	__MIN_VELOCITY = 2.0
+	__MAX_VELOCITY = 4.0
+	__MIN_RGB = 0.5
+	__MAX_RGB = 1.0
 
-	def __set_pos(self, r:float, b:Box):
-		x = self.__set_axis(r, b.right, b.left)
-		y = self.__set_axis(r, b.top, b.bottom)
-		return Vector2(x, y)
+	def __init__(self, box:Box, spawn_num:int=1, position:Vector2 = Vector2(), color:Color = Color()) -> None:
+		self.position = position
+		self.color = color
+		self.size = self.__MAX_RADIUS
+		self.spawn_enable_signal = True
+		self.spawn_num = spawn_num
+		self.box = box
+		self.particles = dict()
+		self.delay = 0.5
+		self.dt_acc = 0.0
 
 	def __set_radius(self) -> float:
-		return uniform(0.05, 0.15)
+		return uniform(self.__MIN_RADIUS, self.__MAX_RADIUS)
 
 	def __set_vel(self):
-		x = uniform(2.0, 4.0)
-		y = uniform(2.0, 4.0)
+		x = uniform(self.__MIN_VELOCITY, self.__MAX_VELOCITY)
+		y = uniform(self.__MIN_VELOCITY, self.__MAX_VELOCITY)
 		return Vector2(x, y)
 	
 	def __set_accel(self):
 		return Vector2(0.0, 0.0)
 
 	def __set_color(self):
-		r = uniform(0.5,1.0)
-		g = uniform(0.5,1.0)
-		b = uniform(0.5,1.0)
+		r = uniform(self.__MIN_RGB, self.__MAX_RGB)
+		g = uniform(self.__MIN_RGB, self.__MAX_RGB)
+		b = uniform(self.__MIN_RGB, self.__MAX_RGB)
 		return Color(r, g, b)
 
-	def spawn(self, id:int, b:Box) -> Particle:
-		r = self.__set_radius()
+	def __spawn(self) -> Particle:
 		return Particle(
-			id=id,
-			position=self.__set_pos(r,b),
+			id=self.spawn_num,
+			position=self.position,
 			velocity=self.__set_vel(),
 			acceleration=self.__set_accel(),
 			color=self.__set_color(),
-			radius=r
+			radius=self.__set_radius()
 		)
 
-	def spawn_many(self, n:int, b:Box) -> List[Particle]:
-		particles = list()
-		for i in range(n):
-			particles.append(self.spawn(i, b))
-		return particles
+	def spawn(self, dt:float) -> List[Particle]:
+		if self.spawn_num == 0:
+			self.spawn_enable_signal = False
+		elif len(self.particles) > 0:
+			particle:Particle = self.particles.get(self.spawn_num+1)
+			if (particle.position - self.position) > ((self.size/2) + particle.radius + self.__BORDER_THRESHOLD):
+				self.particles.update({self.spawn_num: self.__spawn()})
+				self.spawn_num -= 1
+		else:
+			self.particles.update({self.spawn_num: self.__spawn()})
+			self.spawn_num -= 1
+
+
+	def draw(self) -> None:
+		line_size = self.size/2
+		glColor3f(*self.color)
+		glBegin(GL_LINE_LOOP)
+		glVertex2f(-line_size, -line_size) #Left
+		glVertex2f(line_size, -line_size) #Top
+		glVertex2f(line_size, line_size) #Right
+		glVertex2f(-line_size, line_size) #Bottom
+		glEnd()

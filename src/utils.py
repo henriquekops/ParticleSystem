@@ -5,6 +5,7 @@
 from __future__ import annotations
 from typing import Iterable
 import os
+from math import sqrt
 
 
 class Vector2:
@@ -19,7 +20,11 @@ class Vector2:
 	def __add__(self, other:Vector2):
 		x = self.x + other.x
 		y = self.y + other.y
-		return Vector2(x, y) 
+		return Vector2(x, y)
+	
+	def __sub__(self, other:Vector2):
+		# https://en.wikipedia.org/wiki/Euclidean_distance
+		return sqrt(((other.x - self.x)**2) + (other.y - self.y)**2)
 
 	def __mul__(self, factor:float):
 		x = self.x * factor
@@ -35,7 +40,7 @@ class Color:
 		self.b = b
 
 	def __str__(self) -> str:
-		return f"Color(r={self.x}, g={self.y}, b={self.z})"
+		return f"Color(r={self.r}, g={self.g}, b={self.b})"
 	
 	def __iter__(self) -> Iterable:
 		return iter((self.r, self.g, self.b))

@@ -5,7 +5,7 @@
 import sys
 from itertools import combinations
 from typing import (
-	List, 
+	Dict, 
 	Callable
 )
 
@@ -22,17 +22,25 @@ from src.spawn import SpawnPoint
 from OpenGL.GLUT import glutInit
 
 
-def main(b:Box, ps:List[Particle]) -> Callable[[float], None]:
+def main(b:Box, spawn_point:SpawnPoint) -> Callable[[float], None]:
 	def __main(dt:float) -> None:
 		b.draw()
-		for p in ps:
+		particles:Dict[int, Particle] = spawn_point.particles
+		if spawn_point.spawn_enable_signal:
+			spawn_point.draw()
+			spawn_point.spawn(dt)
+		
+		p:Particle
+		for p in particles.values():
 			p.draw(ui.show_acc_vec_signal)
 			if ui.animation_signal:
 				p.move(dt)
 				CollisionDetector.handleParticleBoxCollision(b, p)
-		if ui.collision_signal:
-			for p1, p2 in combinations(ps, 2):
+
+		if ui.collision_signal and len(particles) > 1:
+			for p1, p2 in combinations(particles.values(), 2):
 				CollisionDetector.handleParticleParticleCollision(p1, p2)
+
 	return __main
 
 
@@ -50,13 +58,14 @@ if __name__ == "__main__":
 
 	window.create(keyboard_func=ui.keyboard)
 
-	b = Box(
+	box = Box(
 		height=19,
 		width=19
 	)
 
-	spawn_point = SpawnPoint()
+	spawn_point = SpawnPoint(
+		box=box,
+		spawn_num=10
+	)
 
-	particles = spawn_point.spawn_many(5, b)
-
-	window.display(main(b, particles))
+	window.display(main(box, spawn_point))
