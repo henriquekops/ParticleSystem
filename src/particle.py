@@ -2,8 +2,8 @@
 #-*- coding: utf-8 -*-
 
 # project dependencies
-from src.object import Object
-from src.utils import (
+from .object import Object
+from .utils import (
 	Vector2,
 	Color
 )

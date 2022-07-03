@@ -2,8 +2,8 @@
 #-*- coding: utf-8 -*-
 
 # project dependencies
-from src.box import Box
-from src.particle import Particle
+from .box import Box
+from .particle import Particle
 
 # external dependencies
 import numpy as np
