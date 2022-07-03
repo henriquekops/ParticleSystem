@@ -28,7 +28,7 @@ class Particle(Object):
 
 	__N_VERTICES = 30
 	__MASS_MULTIPLIER = 0.2
-	__VEL_THRESHOLD = 7.0
+	__VEL_THRESHOLD = 10.0
 
 	def __init__(self, id:int = 0, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
 		acceleration:Vector2 = Vector2(), color:Color = Color(), radius:float=0, ttl:float=0) -> None:
@@ -54,7 +54,18 @@ class Particle(Object):
 	def move(self, dt:float):
 		self.position += (self.velocity * dt) # sf = si + v * dt (displacement)
 		self.velocity += (self.acceleration * dt) # vf = vi + a * dt (UVRM velocity variation with constant acceleration)
+		self.__truncate_velocity()
 		self.__update_borders()
+
+	def __truncate_velocity(self):
+		if self.velocity.x > self.__VEL_THRESHOLD:
+			self.velocity.x = self.__VEL_THRESHOLD
+		elif self.velocity.x < -self.__VEL_THRESHOLD:
+			self.velocity.x = -self.__VEL_THRESHOLD
+		if self.velocity.y > self.__VEL_THRESHOLD:
+			self.velocity.y = self.__VEL_THRESHOLD
+		elif self.velocity.y < -self.__VEL_THRESHOLD:
+			self.velocity.y = -self.__VEL_THRESHOLD
 
 	def apply_force(self, force:Vector2):
 		self.acceleration += force
