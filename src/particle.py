@@ -28,6 +28,7 @@ class Particle(Object):
 
 	__N_VERTICES = 30
 	__MASS_MULTIPLIER = 0.2
+	__VEL_THRESHOLD = 7.0
 
 	def __init__(self, id:int = 0, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
 		acceleration:Vector2 = Vector2(), color:Color = Color(), radius:float=0, ttl:float=0) -> None:
@@ -54,6 +55,12 @@ class Particle(Object):
 		self.position += (self.velocity * dt) # sf = si + v * dt (displacement)
 		self.velocity += (self.acceleration * dt) # vf = vi + a * dt (UVRM velocity variation with constant acceleration)
 		self.__update_borders()
+
+	def apply_force(self, force:Vector2):
+		self.acceleration += force
+	
+	def remove_force(self):
+		self.acceleration = Vector2()
 
 	def __update_borders(self):
 		self.left = self.position.x-self.radius
