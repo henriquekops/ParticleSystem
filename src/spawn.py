@@ -2,17 +2,24 @@
 #-*- coding: utf-8 -*-
 
 # built-in dependencies
-from random import uniform
+from random import (
+	uniform,
+	choice
+)
 from typing import List
 
 # project dependencies
 from src.particle import Particle
 from src.box import Box
-from src.utils import Vector2, Vector3
+from src.utils import (
+	Vector2, 
+	Color
+)
 
 class SpawnPoint:
 
 	__BORDER_THRESHOLD = 0.01
+	__COLOR_RANGE = (0, 0.5, 1)
 
 	def __init__(self, x:float=0, y:float=0, width:int=0, height:int=0) -> None:
 		pass
@@ -42,10 +49,10 @@ class SpawnPoint:
 		return Vector2(0.0, 0.0)
 
 	def __set_color(self):
-		r = uniform(0.5, 0.1)
-		g = uniform(0.5, 0.1)
-		b = uniform(0.5, 0.1)
-		return Vector3(r, g, b)
+		r = choice(self.__COLOR_RANGE)
+		g = choice(self.__COLOR_RANGE)
+		b = choice(self.__COLOR_RANGE)
+		return Color(r, g, b)
 
 	def spawn(self, id:int, b:Box) -> Particle:
 		r = self.__set_radius()

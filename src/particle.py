@@ -5,7 +5,7 @@
 from src.object import Object
 from src.utils import (
 	Vector2,
-	Vector3
+	Color
 )
 
 # external dependencies
@@ -30,7 +30,7 @@ class Particle(Object):
 	__MASS_MULTIPLIER = 0.2
 
 	def __init__(self, id:int = 0, position:Vector2 = Vector2(), velocity:Vector2 = Vector2(), 
-		acceleration:Vector2 = Vector2(), color:Vector3 = Vector3(), radius:float=0, ttl:float=0) -> None:
+		acceleration:Vector2 = Vector2(), color:Color = Color(), radius:float=0, ttl:float=0) -> None:
 		self.id = id
 		self.position = position
 		self.velocity = velocity
@@ -62,7 +62,7 @@ class Particle(Object):
 		self.top = self.position.y-self.radius
 
 	def draw(self, draw_acc_vel_signal:bool) -> None:
-		glColor3f(self.color.x, self.color.y, self.color.z)
+		glColor3f(*self.color)
 		glBegin(GL_LINE_LOOP)
 		for vertex in range(self.__N_VERTICES):
 			angle = float(vertex) * 2.0 * pi / self.__N_VERTICES
@@ -76,14 +76,14 @@ class Particle(Object):
 			self.__draw_velocity()
 
 	def __draw_acceleration(self):
-		glColor3f(self.color.x, self.color.y, self.color.z)
+		glColor3f(*self.color)
 		glBegin(GL_LINES)
 		glVertex2f(self.position.x, self.position.y)
 		glVertex2f(self.acceleration.x, self.acceleration.y)
 		glEnd()
 
 	def __draw_velocity(self):
-		glColor3f(self.color.x, self.color.y, self.color.z)
+		glColor3f(*self.color)
 		glBegin(GL_LINES)
 		glVertex2f(self.position.x, self.position.y)
 		glVertex2f(self.velocity.x, self.velocity.y)

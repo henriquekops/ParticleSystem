@@ -10,11 +10,8 @@ from typing import (
 )
 
 # project dependencies
-from src.utils import ( 
-	Vector3,
-	fix_environment
-)
 from src import ui
+from src.utils import fix_environment
 from src.window import Window
 from src.particle import Particle
 from src.box import Box
@@ -55,8 +52,7 @@ if __name__ == "__main__":
 
 	b = Box(
 		height=19,
-		width=19,
-		color=Vector3(1,1,1)
+		width=19
 	)
 
 	spawn_point = SpawnPoint()

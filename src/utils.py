@@ -3,10 +3,8 @@
 
 # built-in dependencies
 from __future__ import annotations
+from typing import Iterable
 import os
-
-# external dependencies
-from numpy import array
 
 
 class Vector2:
@@ -16,7 +14,7 @@ class Vector2:
 		self.y = y
 
 	def __str__(self) -> str:
-		return f"(x={self.x}, y={self.y})"
+		return f"Vector2(x={self.x}, y={self.y})"
 
 	def __add__(self, other:Vector2):
 		x = self.x + other.x
@@ -29,15 +27,18 @@ class Vector2:
 		return Vector2(x, y)
 
 
-class Vector3:
+class Color:
 
-	def __init__(self, x:float = 0 , y:float = 0, z:float = 0) -> None:
-		self.x = x
-		self.y = y
-		self.z = z
+	def __init__(self, r:float = 1 , g:float = 1, b:float = 1) -> None:
+		self.r = r
+		self.g = g
+		self.b = b
 
 	def __str__(self) -> str:
-		return f"(x={self.x}, y={self.y}, z={self.z})"
+		return f"Color(r={self.x}, g={self.y}, b={self.z})"
+	
+	def __iter__(self) -> Iterable:
+		return iter((self.r, self.g, self.b))
 
 
 def fix_environment() -> None:

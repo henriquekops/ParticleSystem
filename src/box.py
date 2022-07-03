@@ -3,7 +3,10 @@
 
 # project dependencies
 from src.object import Object
-from src.utils import Vector2, Vector3
+from src.utils import (
+	Color,
+	Vector2
+)
 
 # external dependencies
 from OpenGL.GL import (
@@ -16,8 +19,8 @@ from OpenGL.GL import (
 
 class Box(Object):
 
-	def __init__(self, position:Vector2=Vector2(0,0), width:int=1, 
-	height:int=1, color:Vector3=Vector3(0,0,0)) -> None:
+	def __init__(self, position:Vector2=Vector2(), width:int=1, 
+	height:int=1, color:Color=Color()) -> None:
 		self.position = position
 		self.width = width
 		self.height = height 
@@ -28,7 +31,7 @@ class Box(Object):
 		self.top = -0.1*(self.height/2)
 
 	def draw(self):
-		glColor3f(self.color.x, self.color.y, self.color.z)
+		glColor3f(*self.color)
 		glBegin(GL_LINE_LOOP)
 		glVertex2f(-0.1*(self.width/2), -0.1*(self.height/2)) #Left
 		glVertex2f(0.1*(self.width/2), -0.1*(self.height/2)) #Top
