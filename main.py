@@ -34,6 +34,8 @@ def main(b:Box, spawn_point:SpawnPoint) -> Callable[[float], None]:
 		for p in particles.values():
 			p.draw(ui.show_acc_vec_signal)
 			if ui.animation_signal:
+				if ui.kill_forces_signal:
+					p.remove_force()
 				if ui.apply_down_force_signal:
 					p.remove_force()
 					p.apply_force(Vector2(0,-50))
