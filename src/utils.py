@@ -22,6 +22,7 @@ class Vector2:
 		y = self.y + other.y
 		return Vector2(x, y)
 	
+	# TODO: change sub to actual subtraction and change current logic to a custom dist() method
 	def __sub__(self, other:Vector2):
 		# https://en.wikipedia.org/wiki/Euclidean_distance
 		return sqrt(((other.x - self.x)**2) + (other.y - self.y)**2)
@@ -31,6 +32,9 @@ class Vector2:
 		y = self.y * factor
 		return Vector2(x, y)
 
+	# TODO: overwrite __iter__
+	# TODO: implement dot product
+ 
 
 class Color:
 

@@ -61,7 +61,7 @@ def main(b:Box, spawn_point:SpawnPoint) -> Callable[[float], None]:
 
 
 if __name__ == "__main__":
-	fix_environment()
+	fix_environment() # TODO: only for linux
 	glutInit(sys.argv)
 
 	window = Window(
