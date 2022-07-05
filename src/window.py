@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+# built-in dependencies
+from typing import Callable
+
 # external dependencies
 from OpenGL.GL import (
 	GL_COLOR_BUFFER_BIT,
@@ -31,7 +34,7 @@ class Window:
 
 	__FPS = 100
 
-	def __init__(self, title:str, height:int = 0, width:int = 0, x:int = 0, y:int = 0):
+	def __init__(self, title:str, height:int = 0, width:int = 0, x:int = 0, y:int = 0) -> None:
 		self.title = title
 		self.heigth = height
 		self.width = width
@@ -46,7 +49,7 @@ class Window:
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
 
-	def create(self, keyboard_func, special_func) -> None:
+	def create(self, keyboard_func:Callable, special_func:Callable) -> None:
 		glutInitDisplayMode(GLUT_RGBA)
 		glutInitWindowPosition(self.x, self.y)
 		glutInitWindowSize(self.width, self.heigth)
@@ -54,13 +57,13 @@ class Window:
 		glutKeyboardFunc(keyboard_func)
 		glutSpecialFunc(special_func)
 
-	def display(self, func):
+	def display(self, func:Callable) -> None:
 		self.func = func
 		glutDisplayFunc(self.__display)
 		glutIdleFunc(self.__idle_view)
 		glutMainLoop()
 
-	def __idle_view(self):
+	def __idle_view(self) -> None:
 		latest = glutGet(GLUT_ELAPSED_TIME)
 		self.dt = (latest - self.early) / 1000.0
 		self.early = latest

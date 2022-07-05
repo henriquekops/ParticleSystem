@@ -28,7 +28,8 @@ apply_right_force_signal=False
 apply_left_force_signal=False
 kill_forces_signal=False
 
-def reset_forces():
+
+def reset_forces() -> None:
 	global	apply_up_force_signal, \
 			apply_down_force_signal, \
 			apply_right_force_signal, \
@@ -41,7 +42,8 @@ def reset_forces():
 	apply_left_force_signal = False
 	kill_forces_signal = False
 
-def special(*args):
+
+def special(*args) -> None:
 	global 	apply_up_force_signal, \
 			apply_down_force_signal, \
 			apply_right_force_signal, \
@@ -62,7 +64,7 @@ def special(*args):
 		apply_left_force_signal = True
 
 
-def keyboard(*args):
+def keyboard(*args) -> None:
 	global	collision_signal, \
 			show_acc_vec_signal, \
 			animation_signal, \

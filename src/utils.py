@@ -24,48 +24,48 @@ class Vector2:
 	def __str__(self) -> str:
 		return f"Vector2(x={self.x}, y={self.y})"
 
-	def __add__(self, other:Vector2):
+	def __add__(self, other:Vector2) -> Vector2:
 		x = self.x + other.x
 		y = self.y + other.y
 		return Vector2(x, y)
 
-	def __mul__(self, factor:float):
+	def __mul__(self, factor:float) -> Vector2:
 		x = self.x * factor
 		y = self.y * factor
 		return Vector2(x, y)
 
-	def __rmul__(self, factor:float):
+	def __rmul__(self, factor:float) -> Vector2:
 		x = self.x * factor
 		y = self.y * factor
 		return Vector2(x, y)
 
-	def __sub__(self, other:Vector2):
+	def __sub__(self, other:Vector2) -> Vector2:
 		x = self.x - other.x
 		y = self.y - other.y
 		return Vector2(x, y)
 
-	def __rsub__(self, factor:float):
+	def __rsub__(self, factor:float) -> Vector2:
 		x = self.x - factor
 		y = self.y - factor
 		return Vector2(x, y)
 
-	def __rtruediv__(self, factor:float):
+	def __rtruediv__(self, factor:float) -> Vector2:
 		x = self.x / factor
 		y = self.y / factor
 		return Vector2(x, y)
 	
-	def __iter__(self):
+	def __iter__(self) -> Iterable:
 		return iter((self.x, self.y))
 
-	def dist(self, other:Vector2):
+	def dist(self, other:Vector2) -> float:
 		# https://en.wikipedia.org/wiki/Euclidean_distance
 		return sqrt(((other.x - self.x)**2) + (other.y - self.y)**2)
 
-	def norm(self):
+	def norm(self) -> float:
 		# https://en.wikipedia.org/wiki/Norm_(mathematics)
 		return sqrt((self.x**2) + (self.y**2))
  
-	def dot(self, other:Vector2):
+	def dot(self, other:Vector2) -> float:
 		# https://en.wikipedia.org/wiki/Dot_product
 		return ((self.x * other.x) + (self.y * other.y))
 

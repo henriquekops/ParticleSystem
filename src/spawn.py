@@ -3,7 +3,6 @@
 
 # built-in dependencies
 from random import uniform
-from turtle import position
 from typing import List
 
 # project dependencies
@@ -49,15 +48,15 @@ class SpawnPoint(Object):
 	def __set_radius(self) -> float:
 		return uniform(self.__MIN_RADIUS, self.__MAX_RADIUS)
 
-	def __set_vel(self):
+	def __set_vel(self) -> Vector2:
 		x = uniform(self.__MIN_VELOCITY, self.__MAX_VELOCITY)
 		y = uniform(self.__MIN_VELOCITY, self.__MAX_VELOCITY)
 		return Vector2(x, y)
 	
-	def __set_accel(self):
+	def __set_accel(self) -> Vector2:
 		return Vector2(0.0, 0.0)
 
-	def __set_color(self):
+	def __set_color(self) -> Color:
 		r = uniform(self.__MIN_RGB, self.__MAX_RGB)
 		g = uniform(self.__MIN_RGB, self.__MAX_RGB)
 		b = uniform(self.__MIN_RGB, self.__MAX_RGB)

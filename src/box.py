@@ -30,7 +30,7 @@ class Box(Object):
 		self.bottom = 0.1*(self.height/2)
 		self.top = -0.1*(self.height/2)
 
-	def draw(self):
+	def draw(self) -> None:
 		glColor3f(*self.color)
 		glBegin(GL_LINE_LOOP)
 		glVertex2f(self.left, self.top) # top left
