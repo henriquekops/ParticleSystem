@@ -78,7 +78,7 @@ class SpawnPoint(Object):
 			self.spawn_enable_signal = False
 		elif len(self.particles) > 0:
 			particle:Particle = self.particles.get(self.spawn_num+1)
-			if (particle.position - self.position) > ((self.size/2) + particle.radius + self.__BORDER_THRESHOLD):
+			if (particle.position.dist(self.position)) > ((self.size/2) + particle.radius + self.__BORDER_THRESHOLD):
 				self.particles.update({self.spawn_num: self.__spawn()})
 				self.spawn_num -= 1
 		else:
