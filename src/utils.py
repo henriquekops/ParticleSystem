@@ -4,8 +4,9 @@
 # built-in dependencies
 from __future__ import annotations
 from typing import Iterable
-import os
 from math import sqrt
+import os
+import platform
 
 
 class Vector2:
@@ -52,6 +53,7 @@ class Color:
 
 def fix_environment() -> None:
 	try:
-		del os.environ["DISPLAY"]
+		if 'windows' in platform.platform().lower():
+			del os.environ["DISPLAY"]
 	except Exception:
 		pass
