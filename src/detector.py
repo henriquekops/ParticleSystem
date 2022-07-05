@@ -5,9 +5,6 @@
 from .box import Box
 from .particle import Particle
 
-# external dependencies
-import numpy as np
-
 
 class CollisionDetector():
 
@@ -32,19 +29,12 @@ class CollisionDetector():
 		
 		def compute_velocity(p1: Particle, p2: Particle):
 			# elastic collision: https://en.wikipedia.org/wiki/Elastic_collision
-			v1 = np.array([*p1.velocity])
-			v2 = np.array([*p2.velocity])
-			x1 = np.array([*p1.position])
-			x2 = np.array([*p2.position])
-			m1 = p1.mass
-			m2 = p2.mass
-			return v1 - (2 * m2 / (m1 + m2)) * np.dot(v1 - v2, x1 - x2) / np.linalg.norm(x1 - x2) ** 2 * (x1 - x2)
-		
-		x1 = np.array([*p1.position])
-		x2 = np.array([*p2.position])
+			return p1.velocity -  (2 * p2.mass) / (p1.mass + p2.mass) * \
+				(p1.velocity - p2.velocity).dot(p1.position - p2.position) / \
+				(p1.position - p2.position).norm() ** 2 * (p1.position - p2.position)
 
 		if p1 != p2:
-			if np.linalg.norm(x1-x2)*0.96 <= (p1.radius+p2.radius):
+			if (p1.position-p2.position).norm()*0.96 <= (p1.radius+p2.radius):
 				v1 = compute_velocity(p1,p2)
 				v2 = compute_velocity(p2,p1)
 				p1.velocity.x, p1.velocity.y = v1
