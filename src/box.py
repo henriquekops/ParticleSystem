@@ -2,9 +2,9 @@
 #-*- coding: utf-8 -*-
 
 # project dependencies
-from .object import Object
 from .utils import (
 	Color,
+	Object,
 	Vector2
 )
 

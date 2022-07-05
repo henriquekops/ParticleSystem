@@ -11,12 +11,15 @@ from typing import (
 
 # project dependencies
 from src import ui
-from src.utils import Vector2, fix_environment
 from src.window import Window
 from src.particle import Particle
 from src.box import Box
 from src.detector import CollisionDetector
 from src.spawn import SpawnPoint
+from src.utils import (
+	Vector2, 
+	fix_environment
+)
 
 # external dependencies
 from OpenGL.GLUT import glutInit

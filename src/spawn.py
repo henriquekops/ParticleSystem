@@ -9,8 +9,8 @@ from typing import List
 # project dependencies
 from .particle import Particle
 from .box import Box
-from .object import Object
 from .utils import (
+	Object,
 	Vector2, 
 	Color
 )

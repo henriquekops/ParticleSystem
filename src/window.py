@@ -3,12 +3,9 @@
 
 # external dependencies
 from OpenGL.GL import (
-	GL_PROJECTION,
 	GL_COLOR_BUFFER_BIT,
 	GL_MODELVIEW,
 	glClear,
-	glOrtho,
-	glViewport,
 	glMatrixMode,
 	glLoadIdentity
 )
@@ -24,7 +21,6 @@ from OpenGL.GLUT import (
 	glutSwapBuffers,
 	glutPostRedisplay,
 	glutSpecialFunc,
-	glutReshapeFunc,
 	glutKeyboardFunc,
 	glutMainLoop,
 	glutGet
@@ -62,7 +58,6 @@ class Window:
 		self.func = func
 		glutDisplayFunc(self.__display)
 		glutIdleFunc(self.__idle_view)
-		# glutReshapeFunc(self.__reshape)
 		glutMainLoop()
 
 	def __idle_view(self):
@@ -73,16 +68,6 @@ class Window:
 		if self.acc_dt > 1.0 / self.__FPS:
 			self.acc_dt = 0.0
 			glutPostRedisplay()
-
-	# def __reshape(self, w:int, h:int) -> None:
-	# 	"""
-	# 	Redimension OpenGL window
-	# 	"""
-	# 	glMatrixMode(GL_PROJECTION)
-	# 	glLoadIdentity()
-	# 	glOrtho(-7, 7, -7, 7, 0, 1)
-	# 	glViewport(0, 0, self.width, self.heigth)
-
 
 	def __display(self) -> None:
 		self.__reset_view()
