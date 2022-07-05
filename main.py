@@ -28,7 +28,7 @@ def main(b:Box, spawn_point:SpawnPoint) -> Callable[[float], None]:
 		particles:Dict[int, Particle] = spawn_point.particles
 		if spawn_point.spawn_enable_signal:
 			spawn_point.draw()
-			spawn_point.spawn(dt)
+			spawn_point.spawn()
 		
 		p:Particle
 		for p in particles.values():
@@ -61,7 +61,7 @@ def main(b:Box, spawn_point:SpawnPoint) -> Callable[[float], None]:
 
 
 if __name__ == "__main__":
-	fix_environment() # TODO: only for linux
+	fix_environment()
 	glutInit(sys.argv)
 
 	window = Window(

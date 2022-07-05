@@ -33,8 +33,8 @@ class Box(Object):
 	def draw(self):
 		glColor3f(*self.color)
 		glBegin(GL_LINE_LOOP)
-		glVertex2f(-0.1*(self.width/2), -0.1*(self.height/2)) #Left
-		glVertex2f(0.1*(self.width/2), -0.1*(self.height/2)) #Top
-		glVertex2f(0.1*(self.width/2), 0.1*(self.height/2)) #Right
-		glVertex2f(-0.1*(self.width/2), 0.1*(self.height/2)) #Bottom
+		glVertex2f(self.left, self.top) # top left
+		glVertex2f(self.right, self.top) # top right
+		glVertex2f(self.right, self.bottom) # bottom right
+		glVertex2f(self.left, self.bottom) # bottom left
 		glEnd()

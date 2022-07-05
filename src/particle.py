@@ -96,13 +96,13 @@ class Particle(Object):
 	def __draw_acceleration(self):
 		glColor3f(*self.color)
 		glBegin(GL_LINES)
-		glVertex2f(self.position.x, self.position.y)
-		glVertex2f(self.acceleration.x, self.acceleration.y)
+		glVertex2f(*self.position)
+		glVertex2f(*self.acceleration)
 		glEnd()
 
 	def __draw_velocity(self):
 		glColor3f(*self.color)
 		glBegin(GL_LINES)
-		glVertex2f(self.position.x, self.position.y)
-		glVertex2f(self.velocity.x, self.velocity.y)
+		glVertex2f(*self.position)
+		glVertex2f(*self.velocity)
 		glEnd()

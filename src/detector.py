@@ -32,16 +32,16 @@ class CollisionDetector():
 		
 		def compute_velocity(p1: Particle, p2: Particle):
 			# elastic collision: https://en.wikipedia.org/wiki/Elastic_collision
-			v1 = np.array([p1.velocity.x, p1.velocity.y])
-			v2 = np.array([p2.velocity.x, p2.velocity.y])
-			x1 = np.array([p1.position.x, p1.position.y])
-			x2 = np.array([p2.position.x, p2.position.y])
+			v1 = np.array([*p1.velocity])
+			v2 = np.array([*p2.velocity])
+			x1 = np.array([*p1.position])
+			x2 = np.array([*p2.position])
 			m1 = p1.mass
 			m2 = p2.mass
 			return v1 - (2 * m2 / (m1 + m2)) * np.dot(v1 - v2, x1 - x2) / np.linalg.norm(x1 - x2) ** 2 * (x1 - x2)
 		
-		x1 = np.array([p1.position.x, p1.position.y])
-		x2 = np.array([p2.position.x, p2.position.y])
+		x1 = np.array([*p1.position])
+		x2 = np.array([*p2.position])
 
 		if p1 != p2:
 			if np.linalg.norm(x1-x2)*0.96 <= (p1.radius+p2.radius):

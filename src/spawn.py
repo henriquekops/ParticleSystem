@@ -73,7 +73,7 @@ class SpawnPoint(Object):
 			radius=self.__set_radius()
 		)
 
-	def spawn(self, dt:float) -> List[Particle]:
+	def spawn(self) -> List[Particle]:
 		if self.spawn_num == 0:
 			self.spawn_enable_signal = False
 		elif len(self.particles) > 0:
@@ -90,8 +90,8 @@ class SpawnPoint(Object):
 		line_size = self.size/2
 		glColor3f(*self.color)
 		glBegin(GL_LINE_LOOP)
-		glVertex2f(-line_size, -line_size) #Left
-		glVertex2f(line_size, -line_size) #Top
-		glVertex2f(line_size, line_size) #Right
-		glVertex2f(-line_size, line_size) #Bottom
+		glVertex2f(-line_size, -line_size) # top left
+		glVertex2f(line_size, -line_size) # top right
+		glVertex2f(line_size, line_size) # bottom right
+		glVertex2f(-line_size, line_size) # bottom left
 		glEnd()

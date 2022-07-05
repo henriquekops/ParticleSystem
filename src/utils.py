@@ -33,7 +33,9 @@ class Vector2:
 		y = self.y * factor
 		return Vector2(x, y)
 
-	# TODO: overwrite __iter__
+	def __iter__(self):
+		return iter((self.x, self.y))
+
 	# TODO: implement dot product
  
 
